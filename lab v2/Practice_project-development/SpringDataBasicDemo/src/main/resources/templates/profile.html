@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Profile</h1>
+        </div>
+        <div class="row bg-light rounded">
+          <div class="col-md-6" th:object="${user}">
+            <h2>User</h2>
+            <h4 th:text="'Username: ' + *{username}"></h4>
+            <h4 th:text="'Firstname: ' + *{firstname}"></h4>
+            <h4 th:text="'Lastname: ' + *{lastname}"></h4>
+            <h4 th:text="'Image: ' + *{imageUrl}"></h4>
+            <b>User Roles: </b>
+            <div sec:authentication="principal.authorities"></div>
+          </div>
+          <div class="col-md-6"><img src="/pic/employee.png" height="350px">
+          </div>
+        </div>
+      </main>
+    </div>
+        <div class="align-content-center">
+          <div>
+            <h2 class="text-dark mt-5">My offers</h2>
+            <table class="table table-striped mx-auto">
+              <thead>
+              <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Mileage</th>
+                <th>Price</th>
+                <th>Details</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="o : ${offerInfos}" th:if="${o.user.username == #authentication.principal.username}">
+                <td><span th:text="${o.model.brand.name}"></span></td>
+                <td><span th:text="${o.model.name}"></span></td>
+                <td><span th:text="${o.year}"></span></td>
+                <td><span th:text="${o.mileage}"></span></td>
+                <td><span th:text="${o.price}"></span></td>
+                <td><a class="btn" th:href="@{/offers/{id}(id=${o.id})}">Detailed info</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

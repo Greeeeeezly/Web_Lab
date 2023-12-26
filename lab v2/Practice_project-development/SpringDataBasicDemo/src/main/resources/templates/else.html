@@ -1,0 +1,77 @@
+<!--<h2 class="text-center text-dark mt-5">Мои предложения</h2>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Год выпуска</th>
+            <th>Пробег</th>
+            <th>Цена</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="o : ${offerInfos}" th:if="${o.user.username == #authentication.principal.username}">
+            <td><span th:text="${o.model.brand.name}"></span></td>
+            <td><span th:text="${o.model.name}"></span></td>
+            <td><span th:text="${o.year}"></span></td>
+            <td><span th:text="${o.mileage}"></span></td>
+            <td><span th:text="${o.price}"></span></td>
+            <td><a class="btn btn-block" th:href="@{/offers/{id}(id=${o.id})}">Подробности</a></td>
+          </tr>
+          </tbody>
+        </table>-->
+<!--<h2 class="text-center text-dark mt-5">Доступные предложения</h2>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Год выпуска</th>
+            <th>Пробег</th>
+            <th>Продавец</th>
+            <th>Цена</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="o : ${offerInfos}" th:if="${o.user.username != #authentication.principal.username}">
+            <td><span th:text="${o.model.brand.name}"></span></td>
+            <td><span th:text="${o.model.name}"></span></td>
+            <td><span th:text="${o.year}"></span></td>
+            <td><span th:text="${o.mileage}"></span></td>
+            <td><span th:text="${o.user.username}"></span></td>
+            <td><span th:text="${o.price}"></span></td>
+            <td><a class="btn btn-block" th:href="@{/offers/{id}(id=${o.id})}">Подробности</a></td>
+          </tr>
+          </tbody>
+        </table>-->
+<!--<h2 class="text-center text-dark mt-5">Доступные предложения</h2>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Год выпуска</th>
+            <th>Пробег</th>
+            <th>Продавец</th>
+            <th>Цена</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="o : ${offerInfos}" th:if="${o.user.username != #authentication.principal.username}">
+            <td><span th:text="${o.model.brand.name}"></span></td>
+            <td><span th:text="${o.model.name}"></span></td>
+            <td><span th:text="${o.year}"></span></td>
+            <td><span th:text="${o.mileage}"></span></td>
+            <td><span th:text="${o.user.username}"></span></td>
+            <td><span th:text="${o.price}"></span></td>
+            <td><a class="btn btn-block" th:href="@{/offers/{id}(id=${o.id})}">Подробности</a></td>
+          </tr>
+          </tbody>
+        </table>-->
+<!-- <form th:action="@{/offers/all-sortedByModel}" method="get">
+          <label for="modelName">Выберите модель:</label>
+          <select id="modelName" name="name">
+            <option th:each="model : ${allModels}" th:value="${model}" th:text="${model}"></option>
+          </select>
+          <button class="btn btn-outline-primary" type="submit">Показать</button>
+        </form>-->

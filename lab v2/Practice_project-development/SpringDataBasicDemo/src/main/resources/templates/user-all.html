@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="jumbotron text-center rounded pt-5">
+        <h2 class="text-center text-dark mt-5">Users</h2>
+        <table class="table table-striped">
+          <tbody>
+          <tr th:each="u : ${users}">
+            <td>
+              <span th:text="${u.username}"></span>
+              <a class="btn btn-block" th:href="@{/users/{id}(id=${u.id})}">Details</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <a class="btn btn-success mb-3" th:href="@{/users/new}">Add new user</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

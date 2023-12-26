@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Details</h1>
+        </div>
+        <div class="row bg-light rounded">
+          <div class="col-md-6"><img th:src="@{/pic/img.png}" height="350px" alt="Model Image"></div>
+          <div class="col-md-6 pt-3">
+            <p th:text="${'Seller: ' + offerDetails.user.firstname + ' ' + offerDetails.user.lastname}"></p>
+            <p th:text="${'Model: ' + offerDetails.model.name}"></p>
+            <p th:text="${'Brand: ' + offerDetails.model.brand.name}"></p>
+            <p th:text="${'Years: ' + offerDetails.model.startYear +'-'+ offerDetails.model.endYear}"></p>
+            <p th:text="${'Transmission: ' + offerDetails.transmission}"></p>
+            <p th:text="${'Engine: ' + offerDetails.engine}"></p>
+            <p th:text="${'Mialege: ' + offerDetails.mileage}"></p>
+            <p th:text="${'Price: ' + offerDetails.price}"></p>
+            <a class="btn btn-block" th:href="@{/brands/{id}(id=${offerDetails.model.brand.id})}">Brand details</a>
+            <a class="btn btn-block" th:href="@{/models/{id}(id=${offerDetails.model.id})}">Model details</a>
+            <div class="align-bottom" th:if="${#authorization.expression('hasRole(''Admin'')') or offerDetails.user.username == #authentication.principal.username}">
+              <a class="btn btn-danger align-bottom"
+                 th:href="@{/offers/delete/{id}(id=${offerDetails.id})}">Delete</a>
+              <a class="btn btn-warning align-bottom"
+                 th:href="@{/offers/edit/{id}(id=${offerDetails.id})}">Update</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h2>Description</h2>
+            <p th:text = "${offerDetails.description}"></p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

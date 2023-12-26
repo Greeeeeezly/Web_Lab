@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+        <div class="justify-content-center">
+          <h1>Brand updating</h1>
+        </div>
+        <form th:action="@{/models/edit/{id}(id=${modelModel.id})}"
+              th:method="post"
+              th:object="${modelModel}"
+              class="m-md-auto w-50 pb-3">
+
+          <div class="mb-3 d-flex align-items-center">
+            <div class="mb-3">
+              <label class="form-label" for="model"><h5>Available brands</h5></label>
+              <select multiple="false" class="form-control text-center" id="model" name="name" th:field="*{brand.name}">
+                <option th:each="b : ${availableBrands}" th:value="${b.name}" th:text="${b.name}">Brand name</option>
+              </select>
+              <small th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="text-danger">Error</small>
+            </div>
+            <label for="name" class="mr-2">Name</label>
+            <input th:field="*{name}"
+                   th:errorclass="is-invalid"
+                   type="text" class="form-control text-center" id="name" name="name"/>
+            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error message</small>
+            <input th:field="*{category}"
+                   th:errorclass="is-invalid"
+                   type="text" class="form-control text-center" id="category" name="category"/>
+            <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger">Error message</small>
+            <input th:field="*{startYear}"
+                   th:errorclass="is-invalid"
+                   type="text" class="form-control text-center" id="startYear" name="startYear"/>
+            <small th:if="${#fields.hasErrors('startYear')}" th:errors="*{startYear}" class="text-danger">Error message</small>
+            <input th:field="*{endYear}"
+                   th:errorclass="is-invalid"
+                   type="text" class="form-control text-center" id="endYear" name="endYear"/>
+            <small th:if="${#fields.hasErrors('endYear')}" th:errors="*{endYear}" class="text-danger">Error message</small>
+          </div>
+
+          <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

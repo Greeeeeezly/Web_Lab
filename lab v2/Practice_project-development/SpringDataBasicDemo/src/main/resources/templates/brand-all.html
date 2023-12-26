@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<style>
+    .card-deck {
+        flex-direction: column;
+    }
+</style>
+<main class="flex-shrink-0">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="text-center text-dark mb-4">Brands</h2>
+
+                <div class="card-deck">
+                    <div class="card mb-4" th:each="b : ${brands}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${b.name}"></h5>
+                            <a class="btn btn-primary btn-block" th:href="@{/brands/{id}(id=${b.id})}">More info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="align-bottom" th:if="${#authorization.expression('hasRole(''Admin'')')}">
+                        <a class="btn btn-success" th:href="@{/brands/new}">Add brand</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-primary" th:href="@{/brands/byModelCount}">Brand with highers count of models</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

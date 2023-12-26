@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="jumbotron text-center rounded pt-5">
+        <h2 class="text-center text-dark mt-5">Offers</h2>
+
+        <div class="dropdown text-center mb-3">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Choose parameter
+          </button>
+          <div class="dropdown-menu mx-auto" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/offers/all-sortedByPrice?sortByPrice=asc">By price (ascending)</a>
+            <a class="dropdown-item" href="/offers/all-sortedByPrice?sortByPrice=desc">By price (descending)</a>
+            <a class="dropdown-item" href="/offers/all-sortedByMileage?sort=asc">By mileage (ascending)</a>
+            <a class="dropdown-item" href="/offers/all-sortedByMileage?sort=desc">By mileage(descending)</a>
+            <a class="dropdown-item" href="/offers/all-sortedByYear?sort=asc">By year (ascending)</a>
+            <a class="dropdown-item" href="/offers/all-sortedByYear?sort=desc">By year (descending)</a>
+          </div>
+        </div>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Mileage</th>
+            <th>Price</th>
+            <th>Details</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="o : ${offerInfos}">
+            <td><span th:text="${o.model.brand.name}"></span></td>
+            <td><span th:text="${o.model.name}"></span></td>
+            <td><span th:text="${o.year}"></span></td>
+            <td><span th:text="${o.mileage}"></span></td>
+            <td><span th:text="${o.price}"></span></td>
+            <td><a class="btn btn-block" th:href="@{/offers/{id}(id=${o.id})}">Details</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-center align-items-center mb-3">
+          <a class="btn btn-success mb-3" th:href="@{/offers/add}">Create offer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

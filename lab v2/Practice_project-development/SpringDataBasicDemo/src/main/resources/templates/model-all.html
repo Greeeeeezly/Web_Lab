@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100 bg-light">
+<div th:replace="~{fragments/navbar}" class="bg-primary text-light p-3">Navbar</div>
+<style>
+    .card-deck {
+        flex-direction: column;
+    }
+
+    .jumbotron {
+        background-color: #f8f9fa; /* Light gray background */
+    }
+
+    .card {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.5rem;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+</style>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center mt-5">
+                <h2 class="text-center text-dark">Models</h2>
+
+                <div class="card-deck">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Models</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="m : ${models}">
+                            <td>
+                                <span th:text="${m.name}"></span>
+                            </td>
+                            <td>
+                                <a class="btn btn-info" th:href="@{/models/{id}(id=${m.id})}">More info</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="align-bottom" th:if="${#authorization.expression('hasRole(''Admin'')')}">
+                            <a class="btn btn-success" th:href="@{/models/new}">Add Model</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-warning" th:href="@{/models/byYear}">Top 5 new models</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}" class="bg-dark text-light p-3"/>
+</body>
+</html>

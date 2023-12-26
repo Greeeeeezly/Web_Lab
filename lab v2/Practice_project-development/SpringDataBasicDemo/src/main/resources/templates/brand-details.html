@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Details</h1>
+                </div>
+                <div class="row bg-light rounded">
+                    <div class="col-md-6"><img src="/pic/brands.jpg" height="350px"></div>
+                    <div class="col-md-6 pt-3">
+                        <h4 th:text="${brandDetails.name}"></h4>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Models</th>
+                                <th scope="col">Details</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="m : ${brandDetails.model}">
+                                <td th:text="${m.name}"></td>
+                                <td>
+                                    <a class="btn btn-info" th:href="@{/models/{id}(id=${m.id})}">More info</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="align-bottom" th:if="${#authorization.expression('hasRole(''Admin'')')}">
+                        <a class="btn btn-danger align-bottom"
+                               th:href="@{/brands/delete/{id}(id=${brandDetails.id})}">Delete</a>
+                            <a class="btn btn-warning align-bottom"
+                               th:href="@{/brands/edit/{id}(id=${brandDetails.id})}">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

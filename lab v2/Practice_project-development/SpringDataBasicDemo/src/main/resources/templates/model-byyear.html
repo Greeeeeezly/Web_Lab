@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
+                <h2 class="text-center text-dark mt-5">Top 5 new models</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="m : ${modelsByYear}">
+                        <td>
+                            <span th:text="${m.name}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${m.year}"></span>
+                        </td>
+                        <td>
+                            <a class="btn btn-block" th:href="@{/models/{id}(id=${m.id})}">More info</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>
+
