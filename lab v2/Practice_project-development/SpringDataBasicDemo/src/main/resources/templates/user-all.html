@@ -13,7 +13,7 @@
           <tr th:each="u : ${users}">
             <td>
               <span th:text="${u.username}"></span>
-              <a class="btn btn-block" th:href="@{/users/{id}(id=${u.id})}">Details</a>
+              <a class="btn btn-block" th:href="@{/users/{name}(name=${u.username})}">Details</a>
             </td>
           </tr>
           </tbody>

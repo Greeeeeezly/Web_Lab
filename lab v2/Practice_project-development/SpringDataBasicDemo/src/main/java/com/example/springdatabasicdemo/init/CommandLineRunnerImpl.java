@@ -95,10 +95,10 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     public void init() {
 
 
-        Map<String, Long> counts = pageViewService.countOccurrences();
+        /*Map<String, Long> counts = pageViewService.countOccurrencesWithNames();
         for (String key : counts.keySet()) {
             System.out.println(key + ": " + counts.get(key));
-        }
+        }*/
        /* UserRoleDto ur = new UserRoleDto(null,Role.User);
         UserRoleDto ur1 = new UserRoleDto(null,Role.Admin);
 

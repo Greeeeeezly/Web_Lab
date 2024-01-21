@@ -51,7 +51,7 @@ public class BrandServiceImpl implements BrandService<UUID> {
     }
     @Override
     @CacheEvict(cacheNames = "brands", allEntries = true)
-    public void delete(BrandDto entity) {
+    public void delete(DetailedBrandDto entity) {
         brandRepo.deleteById(entity.getId());
     }
 
@@ -69,8 +69,8 @@ public class BrandServiceImpl implements BrandService<UUID> {
 
     @Override
     //@Cacheable("brands")
-    public List<BrandDto> getAll() {
-        return brandRepo.findAll().stream().map((c)->modelMapper.map(c,BrandDto.class)).collect(Collectors.toList());
+    public List<ShowBrandDto> getAll() {
+        return brandRepo.findAll().stream().map((c)->modelMapper.map(c,ShowBrandDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -81,8 +81,8 @@ public class BrandServiceImpl implements BrandService<UUID> {
 
 
     @Override
-    public Optional<BrandDto> getById(UUID id) {
-        return Optional.ofNullable(modelMapper.map(brandRepo.findById(id),BrandDto.class));
+    public Optional<DetailedBrandDto> getById(UUID id) {
+        return Optional.ofNullable(modelMapper.map(brandRepo.findById(id),DetailedBrandDto.class));
     }
 
     @Override

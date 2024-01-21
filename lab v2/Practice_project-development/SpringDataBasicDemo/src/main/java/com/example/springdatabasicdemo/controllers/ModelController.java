@@ -54,7 +54,7 @@ public class ModelController {
 
     @PostMapping("/new")
     public String createModel(@Valid AddModelDto modelModel, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
-        LOG.log(Level.INFO, "Add model post" + principal.getName());
+        LOG.log(Level.INFO, "Add model post " + principal.getName());
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("modelModel", modelModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.modelModel", bindingResult);
@@ -73,7 +73,7 @@ public class ModelController {
     }
     @GetMapping("/edit/{id}")
     public String editModel(@PathVariable UUID id, Model model, Principal principal) {
-        LOG.log(Level.INFO, "Edit model get" + principal.getName());
+        LOG.log(Level.INFO, "Edit model get " + principal.getName());
         model.addAttribute("availableBrands", brandService.getAllShow());
         Optional<DetailedModelDto> m  = modelService.getById(id);
         model.addAttribute("modelModel", m.orElseThrow(() ->
@@ -85,7 +85,7 @@ public class ModelController {
     @PostMapping("/edit/{id}")
     public String editModel(@Valid DetailedModelDto modelModel, BindingResult bindingResult, RedirectAttributes redirectAttributes,
                             Principal principal) {
-        LOG.log(Level.INFO, "Edit model post" + principal.getName());
+        LOG.log(Level.INFO, "Edit model post " + principal.getName());
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("modelModel", modelModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.modelModel",
@@ -112,7 +112,7 @@ public class ModelController {
     }
     @GetMapping("delete/{id}")
     public String deleteModel(@PathVariable ("id") UUID id, Principal principal) {
-        LOG.log(Level.INFO, "Delete model" + principal.getName());
+        LOG.log(Level.INFO, "Delete model " + principal.getName());
         modelService.deleteById(id);
         return "redirect:/models/all";
     }

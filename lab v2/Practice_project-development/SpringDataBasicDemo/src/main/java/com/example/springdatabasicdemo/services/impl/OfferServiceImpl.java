@@ -13,6 +13,7 @@ import com.example.springdatabasicdemo.services.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,7 +66,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
     @Override
     @CacheEvict(cacheNames = "offers", allEntries = true)
     public DetailedOfferDto register(DetailedOfferDto entity, Principal principal) {
-        if (entity.getId() != null) {
+       /* if (entity.getId() != null) {
             Optional<Offer> offer = offerRepo.findById(entity.getId());
             if (offer.isPresent()) {
                 String username = principal.getName();
@@ -77,7 +78,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
                 o.setModified(new Date());
                 return modelMapper.map(offerRepo.save(o), DetailedOfferDto.class);
             }
-        }
+        }*/
         String username = principal.getName();
         User u = authService.getUser(username);
         Offer o = modelMapper.map(entity, Offer.class);
@@ -87,30 +88,24 @@ public class OfferServiceImpl implements OfferService<UUID> {
         return modelMapper.map(offerRepo.save(o), DetailedOfferDto.class);
     }
 
-    @Override
+   /* @Override
     public void registerOf(AddOfferDto offer) {
-        // Получаем текущего аутентифицированного пользователя
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Проверяем, что пользователь аутентифицирован
         if (authentication != null && authentication.isAuthenticated()) {
-            // Получаем информацию о текущем пользователе
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-            // Находим пользователя в репозитории (предполагается, что у вас есть UserRepo)
             User currentUser = userRepo.findByUsername(userDetails.getUsername()).orElse(null);
 
-            // Создаем и сохраняем оффер, устанавливая текущего пользователя
             Offer of = modelMapper.map(offer, Offer.class);
             of.setModel(modelRepo.findByName(offer.getModel()).orElse(null));
             of.setUser(currentUser);
             of.setCreated(new Date());
             offerRepo.saveAndFlush(of);
         } else {
-            // Обработка случая, когда пользователь не аутентифицирован
             throw new RuntimeException("Пользователь не аутентифицирован");
         }
-    }
+    }*/
 
     @Override
     public List<ShowOfferDto> getAllByPrice(String sort) {
@@ -151,24 +146,19 @@ public class OfferServiceImpl implements OfferService<UUID> {
     }
 
     @Override
-    //@CacheEvict(cacheNames = "offers", allEntries = true)
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void deleteById(UUID id) {
         offerRepo.deleteById(id);
     }
 
     @Override
-    //@CacheEvict(cacheNames = "offers", allEntries = true)
-    public void delete(OfferDto entity) {
-        offerRepo.deleteById(entity.getId());
+    @Cacheable("offers")
+    public List<ShowOfferDto> getAll() {
+        return offerRepo.findAll().stream().map((c) -> modelMapper.map(c, ShowOfferDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    // @Cacheable("offers")
-    public List<OfferDto> getAll() {
-        return offerRepo.findAll().stream().map((c) -> modelMapper.map(c, OfferDto.class)).collect(Collectors.toList());
-    }
-
-    @Override
+    @Cacheable("offers")
     public List<ShowOfferDto> getAllShow() {
         return offerRepo.findAll().stream().map((o) -> modelMapper.map(o, ShowOfferDto.class)).collect(Collectors.toList());
     }
@@ -185,6 +175,7 @@ public class OfferServiceImpl implements OfferService<UUID> {
     }
 
     @Override
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public DetailedOfferDto update(DetailedOfferDto detailedOfferDto) {
         Offer offer = offerRepo.findById(detailedOfferDto.getId()).get();
         offer.setDescription(detailedOfferDto.getDescription());

@@ -109,4 +109,10 @@ public class UserServiceImpl implements UserService<UUID> {
 
         return userOptional.map(user -> modelMapper.map(user, DetailedUserDto.class));
     }
+
+    @Override
+    public Optional<DetailedUserDto> getByNameDetailed(String userName) {
+        return Optional.ofNullable(modelMapper.map(userRepo.findByUsername(userName),DetailedUserDto.class));
+
+    }
 }

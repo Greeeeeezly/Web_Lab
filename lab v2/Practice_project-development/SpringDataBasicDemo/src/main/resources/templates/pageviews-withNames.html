@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<style>
+  .card-deck {
+    flex-direction: column;}
+</style>
+<main class="flex-shrink-0">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1>Page Views</h1>
+        <table>
+          <tr>
+            <th>Request</th>
+            <th>Count</th>
+            <th>Username</th>
+            <th></th>
+          </tr>
+          <tr th:each="entry : ${counts}">
+            <td th:text="${entry.key}"></td>
+            <td th:text="${entry.value}"></td>
+            <td th:text="${substrings[entry.key]}"></td>
+            <td>
+              <a class="btn btn-block" th:href="@{'/users/' + ${substrings[entry.key]}}">Details</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

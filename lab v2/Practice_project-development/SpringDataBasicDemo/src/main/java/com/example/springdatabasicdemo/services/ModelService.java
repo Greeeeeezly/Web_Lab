@@ -11,8 +11,7 @@ import java.util.Optional;
 public interface ModelService<UUID>{
 
     AddModelDto register(AddModelDto model);
-    ModelDto registerM(ModelDto model);
-    void delete (ModelDto model);
+    void delete (DetailedModelDto model);
     void deleteById(UUID id);
     Optional<DetailedModelDto> getById(UUID id);
     Optional<ShowModelDto> getByName(String name);
@@ -23,7 +22,7 @@ public interface ModelService<UUID>{
     DetailedModelDto update(DetailedModelDto modelDto);
 
     Optional<DetailedModelDto> getByIdDetailed(UUID id);
-    List<ModelDto> getAll();
+    List<ShowModelDto> getAll();
     List<ShowModelDto> getAllShow();
     public List<String> getModelNames();
 

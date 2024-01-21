@@ -60,24 +60,7 @@ public class ModelServiceImpl implements ModelService<UUID> {
         m.setBrand(brandRepo.findByName(entity.getBrand()).orElse(null));
         return modelMapper.map(modelRepo.save(m), AddModelDto.class);
     }
-    @Override
-    public ModelDto registerM(ModelDto entity) {
-        if (entity.getName()!=null) {
-            Optional<Model> model = modelRepo.findByName(entity.getName());
-            if (model.isPresent()) {
-                Model m = modelMapper.map(entity, Model.class);
-                m.setCreated(model.get().getCreated());
-                m.setModified(new Date());
-                m.setBrand(brandRepo.findByName(entity.getBrand().getName()).orElse(null));
-                return modelMapper.map(modelRepo.save(m), ModelDto.class);
 
-            }
-        }
-        Model m = modelMapper.map(entity,Model.class);
-        m.setCreated(new Date());
-        m.setBrand(brandRepo.findByName(entity.getBrand().getName()).orElse(null));
-        return modelMapper.map(modelRepo.save(m), ModelDto.class);
-    }
 
     @Override
     @CacheEvict(cacheNames = "models", allEntries = true)
@@ -87,7 +70,7 @@ public class ModelServiceImpl implements ModelService<UUID> {
 
     @CacheEvict(cacheNames = "models", allEntries = true)
     @Override
-    public void delete(ModelDto entity) {
+    public void delete(DetailedModelDto entity) {
         modelRepo.deleteById(entity.getId());
     }
 
@@ -104,8 +87,8 @@ public class ModelServiceImpl implements ModelService<UUID> {
     }
     @Override
     @Cacheable("models")
-    public List<ModelDto> getAll() {
-        return modelRepo.findAll().stream().map((c)->modelMapper.map(c,ModelDto.class)).collect(Collectors.toList());
+    public List<ShowModelDto> getAll() {
+        return modelRepo.findAll().stream().map((c)->modelMapper.map(c,ShowModelDto.class)).collect(Collectors.toList());
     }
     @Override
     @Cacheable("models")

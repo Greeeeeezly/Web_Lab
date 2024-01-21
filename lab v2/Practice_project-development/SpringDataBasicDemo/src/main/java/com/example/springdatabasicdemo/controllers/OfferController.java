@@ -44,7 +44,7 @@ public class OfferController {
     @PostMapping("/add")
     public String addOffer(@Valid DetailedOfferDto offerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,
                            Principal principal) {
-        LOG.log(Level.INFO, "Add offer post" + principal.getName());
+        LOG.log(Level.INFO, "Add offer post " + principal.getName());
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("offerModel", offerDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel",
@@ -62,7 +62,7 @@ public class OfferController {
 
     @PostMapping("/edit/{id}")
     public String editOffer(@Valid DetailedOfferDto offerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal) {
-        LOG.log(Level.INFO, "Edit offer post" + principal.getName());
+        LOG.log(Level.INFO, "Edit offer post "+offerDto.getId()+" " + principal.getName());
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("offerModelUpdate", offerDto);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModelUpdate",
@@ -88,7 +88,7 @@ public class OfferController {
 
     @GetMapping("/edit/{id}")
     public String editOffer(@PathVariable UUID id, Model model, Principal principal) {
-        LOG.log(Level.INFO, "Edit offer " + principal.getName());
+        LOG.log(Level.INFO, "Edit offer "+id+" " + principal.getName());
         Optional<DetailedOfferDto> o  = offerService.getById(id);
         model.addAttribute("offerModelUpdate", o.orElseThrow(() ->
                 new NoSuchElementException("Value not present")));
@@ -146,15 +146,9 @@ public class OfferController {
         return "offers-all";
     }
 
-   /* @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOffer(@PathVariable UUID id, Principal principal) {
-        offerService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }*/
-
     @GetMapping("/{id}")
     public String offerDetails(@PathVariable("id") UUID id, Model model, Principal principal) {
-        LOG.log(Level.INFO, "Get offer details " + principal.getName());
+        LOG.log(Level.INFO, "Get offer details "+id+" " + principal.getName());
         Optional<DetailedOfferDto> o = offerService.getByIdDetailed(id);
         model.addAttribute("offerDetails", o.orElseThrow(() ->
                 new NoSuchElementException("Value not present")));

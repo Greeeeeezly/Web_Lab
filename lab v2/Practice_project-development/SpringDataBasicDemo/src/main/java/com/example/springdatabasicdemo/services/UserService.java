@@ -11,8 +11,8 @@ public interface UserService<UUID>{
     void delete (UserDto user);
     void deleteById(UUID id);
     Optional<UserDto> getById(UUID id);
-    Optional<UserDto> getByUsername(String username);
     Optional<DetailedUserDto> getByIdDetailed(UUID id);
+    Optional<DetailedUserDto> getByNameDetailed(String userName);
     List<UserDto> getAll();
     AddUserDto register(AddUserDto user);
     List<ShowUserDto> getAllShow();

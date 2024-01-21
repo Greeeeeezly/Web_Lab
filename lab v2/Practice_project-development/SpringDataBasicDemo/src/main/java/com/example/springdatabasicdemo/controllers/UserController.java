@@ -68,9 +68,16 @@ public class UserController {
         return "user-all";
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public String userDetails(@PathVariable("id") UUID id, Model model) {
         Optional<DetailedUserDto> u  = userService.getByIdDetailed(id);
+        model.addAttribute("userDetails", u.orElseThrow(() ->
+                new NoSuchElementException("Value not present")));
+        return "user-details";
+    }*/
+    @GetMapping("/{name}")
+    public String userDetailsByName(@PathVariable("name") String name, Model model) {
+        Optional<DetailedUserDto> u  = userService.getByNameDetailed(name);
         model.addAttribute("userDetails", u.orElseThrow(() ->
                 new NoSuchElementException("Value not present")));
         return "user-details";
